@@ -4,7 +4,7 @@ while true
 do
     echo "[$(date)] Calling $URL"
 
-    curl -L "$URL"
+    curl -fsL "$URL" > /dev/null 2>&1
 
     echo ""
     echo "Sleeping 5 minutes..."
