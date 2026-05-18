@@ -1,9 +1,11 @@
 #!/bin/sh
 
 URL=$(
-  curl -s https://api.github.com/repos/dabeecao/telecloud-go/releases/latest \
-  | jq -r '.assets[] | select(.name | test("linux_amd64")) | .browser_download_url' \
-  | head -n1
+curl -s https://api.github.com/repos/dabeecao/telecloud-go/releases/latest \
+| grep browser_download_url \
+| grep linux_amd64 \
+| sed -E 's/.*"([^"]+)".*/\1/' \
+| head -n1
 )
 
 if [ -z "$URL" ]; then
