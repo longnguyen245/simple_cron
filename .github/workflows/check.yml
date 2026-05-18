@@ -22,7 +22,6 @@ jobs:
           sudo apt-get install -y jq
 
       - name: Get latest release asset
-        id: rel
         run: |
           URL=$(curl -s https://api.github.com/repos/dabeecao/telecloud-go/releases/latest \
           | jq -r '.assets[] | select(.name | contains("linux_amd64")) | .browser_download_url' \
@@ -30,10 +29,25 @@ jobs:
 
           echo "$URL" > download.txt
 
-      - name: Commit update
+      - name: Commit only if URL changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          NEW_URL=$(cat download.txt)
+          OLD_URL=$(cat download.txt 2>/dev/null || echo "")
+
+          git fetch origin main
+          git checkout origin/main -- download.txt 2>/dev/null || true
+
+          OLD_URL=$(cat download.txt 2>/dev/null || echo "")
+
+          if [ "$NEW_URL" = "$OLD_URL" ]; then
+            echo "URL unchanged -> skip commit"
+            exit 0
+          fi
+
+          echo "$NEW_URL" > download.txt
           git add download.txt
-          git commit -m "update version" || exit 0
+          git commit -m "update download url"
           git push
