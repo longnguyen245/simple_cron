@@ -18,7 +18,8 @@ jobs:
 
       - name: Install Package
         run: |
-          apt install jd -y
+          sudo apt-get update
+          sudo apt-get install -y jd
 
       - name: Get latest release asset
         id: rel
