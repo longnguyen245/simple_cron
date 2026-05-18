@@ -1,5 +1,7 @@
 #!/bin/sh
 
+./telecloud &
+
 while true
 do
     echo "[$(date)] Calling $URL"
@@ -11,5 +13,3 @@ do
 
     sleep 300
 done
-
-./telecloud
