@@ -16,30 +16,23 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get latest release
+      - name: Install Package
+        run: |
+          apt install jd -y
+
+      - name: Get latest release asset
         id: rel
         run: |
-          VERSION=$(curl -s https://api.github.com/repos/dabeecao/telecloud-go/releases/latest | jq -r .tag_name)
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          URL=$(curl -s https://api.github.com/repos/dabeecao/telecloud-go/releases/latest \
+          | jq -r '.assets[] | select(.name | contains("linux_amd64")) | .browser_download_url' \
+          | head -n1)
 
-      - name: Compare version
-        run: |
-          OLD=$(cat version.txt 2>/dev/null || echo "none")
-          NEW=${{ steps.rel.outputs.version }}
-
-          echo "OLD=$OLD"
-          echo "NEW=$NEW"
-
-          if [ "$OLD" != "$NEW" ]; then
-            echo $NEW > version.txt
-          else
-            echo "no change" && exit 0
-          fi
+          echo "$URL" > download.txt
 
       - name: Commit update
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add version.txt
+          git add download.txt
           git commit -m "update version" || exit 0
           git push

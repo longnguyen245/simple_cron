@@ -1,15 +1,10 @@
 #!/bin/sh
+set -e
 
-URL=$(
-curl -s https://api.github.com/repos/dabeecao/telecloud-go/releases/latest \
-| grep browser_download_url \
-| grep linux_amd64 \
-| sed -E 's/.*"([^"]+)".*/\1/' \
-| head -n1
-)
+URL=$(cat ./download.txt)
 
 if [ -z "$URL" ]; then
-  echo "binary linux_amd64 not found"
+  echo "download.txt is empty"
   exit 1
 fi
 
