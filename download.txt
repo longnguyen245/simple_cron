@@ -1,1 +1,1 @@
-https://github.com/dabeecao/telecloud-go/releases/download/v3.4.1/telecloud-go_3.4.1_linux_amd64.tar.gz
+https://github.com/dabeecao/telecloud-go/releases/download/v3.5.0/telecloud-go_3.5.0_linux_amd64.tar.gz
