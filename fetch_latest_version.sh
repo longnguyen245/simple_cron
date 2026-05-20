@@ -1,7 +1,11 @@
 #!/bin/sh
 set -e
 
-URL=$(cat ./download.txt)
+if [ -n "$CUSTOM_DOWNLOAD_URL" ]; then
+  URL="$CUSTOM_DOWNLOAD_URL"
+else
+  URL=$(cat ./download.txt)
+fi
 
 if [ -z "$URL" ]; then
   echo "download.txt is empty"
