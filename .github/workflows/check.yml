@@ -23,7 +23,7 @@ jobs:
 
       - name: Get latest release asset
         run: |
-          URL=$(curl -s https://api.github.com/repos/dabeecao/telecloud-go/releases/latest \
+          URL=$(curl -s https://api.github.com/repos/longnguyen245/telecloud-go/releases/latest \
           | jq -r '.assets[] | select(.name | contains("linux_amd64")) | .browser_download_url' \
           | head -n1)
 
