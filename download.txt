@@ -1,1 +1,1 @@
-https://github.com/longnguyen245/telecloud-go/releases/download/v3.7.1-fork/telecloud-go_3.7.1-fork_linux_amd64.tar.gz
+https://github.com/longnguyen245/telecloud-go/releases/download/v3.7.3-fork/telecloud-go_3.7.3-fork_linux_amd64.tar.gz
