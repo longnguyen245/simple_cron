@@ -47,6 +47,11 @@ jobs:
             exit 0
           fi
 
+          if [ "$NEW_URL" = "" ]; then
+            echo "URL empty -> skip commit"
+            exit 0
+          fi
+
           echo "$NEW_URL" > download.txt
           git add download.txt
           git commit -m "update download url"
